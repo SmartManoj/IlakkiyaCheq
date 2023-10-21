@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>இலக்கிய Cheq | A Thamizh Grammarly</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<style>
+    .heading {
+        text-align: center;
+        font-size: 50px;
+        font-family: 'Times New Roman', Times, serif;
+        /* green color */
+        color: #4CAF50;
+    }
+    h2 {
+        /* text-align: center; */
+        font-size: 30px;
+        font-family: 'Times New Roman', Times, serif;
+        /* green color */
+        color: #4CAF50;
+    }
+    button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        margin-left: 45%;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s;
+        cursor: pointer;    
+    }
+    /* hover effect */
+    /* button:hover {
+        background-color: #555555;
+        color: white;
+    } */
+    /* click effect */
+    button:active {
+        background-color: #555555;
+        color: white;
+        transform: translateY(4px);
+    }
+
+    textarea {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #4CAF50;
+        border-radius: 4px;
+        resize: none;
+    }
+    .logo {
+        position: relative;
+        /* move image down */
+        top: 15px;
+    }
+    #bug {
+        /* align right */
+        text-align: right;
+    }
+    a:hover {
+        /* underline */
+        text-decoration: underline;
+    }
+
+    body {
+        /* light green background */
+        background-color: #f5ffe6;
+    }
+</style>
+<!-- favicon -->
+<link rel="shortcut icon" href="/static/e.jpg" type="image/png">
+<h1 class="heading"><img src="/static/e.jpg" width="4.5%" class="logo">
+    இலக்கிய Cheq | A Thamizh Grammarly</h1>
+
+<textarea id="textToCheck" rows="7" cols="100" spellcheck="false" placeholder="எதுவும் ஒன்றாகும்">2500 ஆண்டுகளுக்கும் மேல் பழமை வாய்ந்த இலக்கிய மரபைக் கொண்டுள்ள தமிழ் மொழி, தற்போது வழக்கில் இருக்கும் ஒரு சில
+செம்மொழிகளில் எதுவும் ஒன்றாகும்.</textarea><br><br>
+
+<button id="checkButton">Check Grammar</button>
+
+<h2>Results:</h2>
+<textarea id="resultBox" rows="7" cols="100"></textarea><br><br>
+
+<!-- support link for https://t.me/IlakkiyaCheqBot?start=textarea content -->
+<div id="bug">
+    <a style="color: red;" >Bug Report</a>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#checkButton").click(function(){
+      var text = $("#textToCheck").val();
+      $.ajax({
+        url: "/check_grammar",
+        type: "POST",
+        data: { text: text },
+        success: function(response){
+          $("#resultBox").html(response);
+        }
+      });
+    });
+
+    $('#bug a').click(function(){
+        var text = $("#textToCheck").val();
+        // encode textarea content
+        text = encodeURIComponent(text);
+        var url = "https://t.me/IlakkiyaCheqBot?start=bugreport";
+        window.open(url, '_blank');
+    });
+
+  });
+
+
+</script>
+
+</body>
+</html>
+
