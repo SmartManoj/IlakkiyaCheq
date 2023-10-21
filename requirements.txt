@@ -1,0 +1,4 @@
+Flask==2.0.3
+Open_Tamil==1.1
+tamilspellchecker==0.10
+wiktionaryparser==0.0.97
