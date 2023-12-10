@@ -29,9 +29,9 @@ def generate_homophones(word):
 
     return _generate_homophones(word)
 
-word = "நண்பகல்"
+word = "பொறுத்து"
 homophones = generate_homophones(word)
-print(homophones)
+# print(homophones)
 
 from tamilspellchecker.TamilwordChecker import TamilwordChecker
 from tamilspellchecker.TamilSpellingAutoCorrect import get_data
