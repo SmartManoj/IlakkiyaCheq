@@ -16,20 +16,6 @@ def split_tamil_letter(letter):
     tuple: A tuple containing the consonant and vowel components.
     """
 
-    # Tamil consonants (mei) and their corresponding vowel forms (uyirmei)
-    consonants = {
-        'க்': 'க', 'ச்': 'ச', 'ட்': 'ட', 'த்': 'த', 'ப்': 'ப', 'ற்': 'ற',
-        'ஞ்': 'ஞ', 'ண்': 'ண', 'ந்': 'ந', 'ம்': 'ம', 'ன்': 'ன',
-        'ய்': 'ய', 'ர்': 'ர', 'ல்': 'ல', 'வ்': 'வ', 'ழ்': 'ழ', 'ள்': 'ள',
-        'ஜ்': 'ஜ', 'ஷ்': 'ஷ', 'ஸ்': 'ஸ',
-        'ஹ்': 'ஹ', 'க்ஷ்': 'க்ஷ', 'ஸ்ரீ': 'ஸ்ரீ',
-    }
-
-    # Tamil short vowels (kuril) and their symbols
-    vowels = {
-        'அ': '', 'ஆ': 'ா', 'இ': 'ி', 'ஈ': 'ீ', 'உ': 'ு', 'ஊ': 'ூ',
-        'எ': 'ெ', 'ஏ': 'ே', 'ஐ': 'ை', 'ஒ': 'ொ', 'ஓ': 'ோ', 'ஔ': 'ௌ',
-    }
 
     # Split the letter into consonant (mei) and vowel (uyir) parts
     for uyir, symbol in vowels.items():
@@ -38,6 +24,90 @@ def split_tamil_letter(letter):
                 return (mei, uyir)
 
     return (letter, '') if letter in consonants else ('', letter)
+
+# Tamil consonants (mei) and their corresponding vowel forms (uyirmei)
+consonants = {
+    'க்': 'க', 'ச்': 'ச', 'ட்': 'ட', 'த்': 'த', 'ப்': 'ப', 'ற்': 'ற',
+    'ஞ்': 'ஞ', 'ண்': 'ண', 'ந்': 'ந', 'ம்': 'ம', 'ன்': 'ன',
+    'ய்': 'ய', 'ர்': 'ர', 'ல்': 'ல', 'வ்': 'வ', 'ழ்': 'ழ', 'ள்': 'ள',
+    'ஜ்': 'ஜ', 'ஷ்': 'ஷ', 'ஸ்': 'ஸ',
+    'ஹ்': 'ஹ', 'க்ஷ்': 'க்ஷ', 'ஸ்ரீ': 'ஸ்ரீ',
+}
+
+# Tamil short vowels (kuril) and their symbols
+vowels = {
+    'அ': '', 'ஆ': 'ா', 'இ': 'ி', 'ஈ': 'ீ', 'உ': 'ு', 'ஊ': 'ூ',
+    'எ': 'ெ', 'ஏ': 'ே', 'ஐ': 'ை', 'ஒ': 'ொ', 'ஓ': 'ோ', 'ஔ': 'ௌ',
+}
+உயிர்_குறில் = 'அ, இ, உ, எ, ஒ'.split(', ')
+உயிர்_நெடில் = 'ஆ, ஈ, ஊ, ஏ, ஐ, ஓ, ஒள'.split(', ')
+
+உயிர்_எழுத்துக்கள் = உயிர்_குறில் + உயிர்_நெடில்
+is_குறில் = lambda x: x in உயிர்_குறில்
+is_நெடில் = lambda x: x in உயிர்_நெடில்
+is_உயிர்_எழுத்து = lambda x: x in உயிர்_எழுத்துக்கள்
+
+வல்லின_மெய் = 'க், ச், ட், த், ப், ற்'.split(', ')
+மெல்லின_மெய் = 'ங், ஞ், ண், ந், ம், ன்'.split(', ')
+இடையின_மெய் = 'ய், ர், ல், வ், ழ், ள்'.split(', ')
+
+def split_tamil_letter(letter):
+    """
+    Split a Tamil letter into its consonant and vowel components.
+
+    Args:
+    letter (str): The Tamil letter to be split.
+
+    Returns:
+    tuple: A tuple containing the consonant and vowel components.
+    """
+    # Split the letter into consonant (mei) and vowel (uyir) parts
+    for uyir, symbol in vowels.items():
+        for mei, consonant in consonants.items():
+            if letter == consonant + symbol:
+                return (mei, uyir)
+
+    return (letter, '') if letter in consonants else ('', letter)
+
+def நெடில்_to_குறில்(எழுத்து):
+    """
+    Convert a Tamil word from நெடில் (netil) to குறில் (kuril) form.
+
+    Args:
+    எழுத்து (str): The Tamil word to be converted.
+
+    Returns:
+    str: The converted Tamil word.
+    """
+
+    # Split the word into letters
+
+    # Convert each letter to its குறில் form
+    mei, uyir = split_tamil_letter(எழுத்து)
+    if uyir in உயிர்_நெடில்:
+        idx = உயிர்_நெடில்.index(uyir)
+        if idx < 5:
+            uyir = உயிர்_குறில்[idx]
+    return consonants[mei] + vowels[uyir]
+
+def குறில்_to_நெடில்(எழுத்து):
+    """
+    Convert a Tamil word from குறில் (kuril) to நெடில் (netil) form.
+
+    Args:
+    எழுத்து (str): The Tamil word to be converted.
+
+    Returns:
+    str: The converted Tamil word.
+    """
+
+    # Split the word into letters
+
+    # Convert each letter to its நெடில் form
+    mei, uyir = split_tamil_letter(எழுத்து)
+    if uyir in உயிர்_குறில்:
+        uyir = உயிர்_நெடில்[உயிர்_குறில்.index(uyir)]
+    return consonants[mei] + vowels[uyir]
 
 def remove_last_uyir_letter(word):
     """
@@ -276,16 +346,6 @@ def is_பெயரெச்சம்(word):
     if word in lists:
         return True
 
-உயிர்_குறில் = 'அ, இ, உ, எ, ஒ'.split(', ')
-உயிர்_நெடில் = 'ஆ, ஈ, ஊ, ஏ, ஐ, ஓ, ஒள'.split(', ')
-உயிர்_எழுத்துக்கள் = உயிர்_குறில் + உயிர்_நெடில்
-is_குறில் = lambda x: x in உயிர்_குறில்
-is_நெடில் = lambda x: x in உயிர்_நெடில்
-is_உயிர்_எழுத்து = lambda x: x in உயிர்_எழுத்துக்கள்
-
-வல்லின_மெய் = 'க், ச், ட், த், ப், ற்'.split(', ')
-மெல்லின_மெய் = 'ங், ஞ், ண், ந், ம், ன்'.split(', ')
-இடையின_மெய் = 'ய், ர், ல், வ், ழ், ள்'.split(', ')
 
 
 def detect_குற்றியலுகரம்(word):
